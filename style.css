@@ -76,7 +76,31 @@ svg { flex-shrink: 0; }
   stroke-linejoin: round;
 }
 .brand-tagline { color: var(--muted); font-size: 17px; }
-.intro { padding: 24px 0 18px; }
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px;
+  padding: 24px 0 18px;
+}
+.intro-copy { min-width: 0; }
+.gina-portrait {
+  position: relative;
+  width: clamp(150px, 15vw, 190px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #071b43;
+}
+.gina-portrait img {
+  position: absolute;
+  top: 51.5%;
+  left: 49.8%;
+  width: 125%;
+  height: 125%;
+  max-width: none;
+  transform: translate(-50%, -50%);
+}
 h1 {
   max-width: 820px;
   font-size: clamp(42px, 4.5vw, 64px);
@@ -274,7 +298,8 @@ h1 span { color: var(--accent); }
   .brand { gap: 9px; font-size: 25px; }
   .brand-icon { width: 30px; height: 30px; }
   .brand-tagline { max-width: 120px; font-size: 12px; line-height: 1.5; text-align: right; }
-  .intro { padding: 32px 0 26px; }
+  .intro { gap: 14px; padding: 32px 0 26px; }
+  .gina-portrait { width: clamp(76px, 22vw, 110px); align-self: start; margin-top: 4px; }
   h1 { font-size: clamp(34px, 8.6vw, 50px); line-height: 1.08; letter-spacing: -1.2px; }
   .subtitle { max-width: 30ch; margin-top: 13px; font-size: 17px; }
   .mood-section h2 { margin-bottom: 14px; font-size: 21px; }
@@ -297,6 +322,8 @@ h1 span { color: var(--accent); }
   .footer-signature { font-size: 16px; }
 }
 @media (max-width: 350px) {
+  .intro { gap: 10px; }
+  .intro h1 { font-size: 29px; }
   .brand-tagline { max-width: 100px; font-size: 11px; }
   .mood-button { gap: 7px; font-size: 13px; }
   .mood-button svg { width: 20px; height: 20px; }
