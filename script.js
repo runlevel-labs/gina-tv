@@ -69,39 +69,93 @@
   ]
 };
 
+const moodDetails = {
+  entspannt: {
+    heading: "Für deinen entspannten Moment",
+    note: "Zurücklehnen. Durchatmen. Der Rest kann warten.",
+    row: 0
+  },
+  bastellaune: {
+    heading: "Für deinen nächsten Geistesblitz",
+    note: "Werkbank an, Kopf aus? Na gut – ein bisschen mitdenken darfst du.",
+    row: 1
+  },
+  muede: {
+    heading: "Für deinen gemütlichen Ausklang",
+    note: "Mach’s dir weich. Heute musst du gar nichts mehr.",
+    row: 2
+  },
+  berieseln: {
+    heading: "Zum Anschalten und Abschalten",
+    note: "Ich such was aus. Du kümmerst dich ums Sofa.",
+    row: 3
+  }
+};
+
 const moodButtons = document.querySelectorAll(".mood-button");
 const recommendationList = document.getElementById("recommendation-list");
 const recommendationStatus = document.getElementById("recommendation-status");
+const recommendationHeading = document.getElementById("recommendations-heading");
+const ginaNote = document.getElementById("gina-note");
 
-function createRecommendationCard(item) {
-  return `
-    <article class="recommendation-card">
-      <span class="card-label">Empfehlung</span>
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-      <a class="recommendation-link" href="${item.link}" target="_blank" rel="noopener noreferrer">
-        Auf YouTube ansehen
-      </a>
-    </article>
-  `;
+function createRecommendationCard(item, index, row) {
+  const card = document.createElement("article");
+  card.className = "recommendation-card";
+
+  const artwork = document.createElement("div");
+  artwork.className = "card-art";
+  artwork.setAttribute("aria-hidden", "true");
+  artwork.style.setProperty("--art-x", `${index * 50}%`);
+  artwork.style.setProperty("--art-y", `${row * 100 / 3}%`);
+
+  const body = document.createElement("div");
+  body.className = "card-body";
+  const title = document.createElement("h3");
+  title.textContent = item.title;
+  const description = document.createElement("p");
+  description.className = "card-description";
+  description.textContent = item.description;
+
+  const link = document.createElement("a");
+  link.className = "recommendation-link";
+  link.href = item.link;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.setAttribute("aria-label", `${item.title}: auf YouTube entdecken (neuer Tab)`);
+  link.innerHTML = '<svg viewBox="0 0 28 24" fill="none" aria-hidden="true"><rect x="1.5" y="2.5" width="25" height="19" rx="5"/><path d="m11 7 8 5-8 5Z"/></svg><span>Auf YouTube entdecken</span><svg class="link-arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>';
+
+  body.append(title, description, link);
+  card.append(artwork, body);
+  return card;
 }
 
 function renderRecommendations(mood) {
-  const recommendations = recommendationsByMood[mood] || [];
-  recommendationList.innerHTML = recommendations.map(createRecommendationCard).join("");
-  return recommendations.length;
+  const details = moodDetails[mood];
+  if (!details) return;
+
+  const recommendations = recommendationsByMood[mood];
+  const cards = recommendations.map((item, index) => createRecommendationCard(item, index, details.row));
+  recommendationList.replaceChildren(...cards);
+  recommendationHeading.textContent = details.heading;
+  ginaNote.textContent = details.note;
+  moodButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.mood === mood));
+  });
+
+  const selectedButton = [...moodButtons].find((button) => button.dataset.mood === mood);
+  const label = selectedButton.querySelector("span").textContent;
+  const statusMood = document.createElement("span");
+  statusMood.className = "sr-only";
+  statusMood.textContent = ` – ${label}`;
+  recommendationStatus.replaceChildren(`${recommendations.length} Ideen für YouTube`, statusMood);
 }
 
 moodButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const selectedMood = button.dataset.mood;
-    const label = button.textContent.trim();
-    const count = renderRecommendations(selectedMood);
-
-    moodButtons.forEach((entry) => {
-      entry.classList.toggle("is-active", entry === button);
-    });
-
-    recommendationStatus.textContent = `${count} Empfehlungen für: ${label}`;
+    if (button.getAttribute("aria-pressed") !== "true") {
+      renderRecommendations(button.dataset.mood);
+    }
   });
 });
+
+renderRecommendations("entspannt");

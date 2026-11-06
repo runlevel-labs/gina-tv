@@ -1,46 +1,66 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gina TV</title>
-  <meta name="description" content="Gina TV – Streaming-Tipps für deinen Moment.">
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#0b1018">
+  <title>Gina TV – Dein Abend. Dein Programm.</title>
+  <meta name="description" content="Du bringst die Stimmung. Gina die Ideen. Entdecke passende YouTube-Suchideen für deinen Moment.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='none' stroke='%239bdeea' stroke-width='2.3' stroke-linecap='round'%3E%3Cpath d='m10 3 6 6 6-6'/%3E%3Crect x='3' y='10' width='26' height='19' rx='5'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css?v=20261106-3">
+  <script src="script.js?v=20261106-3" defer></script>
 </head>
 <body>
-  <main class="page">
-    <header class="hero">
-      <p class="eyebrow">Streaming-Tipps für deinen Moment</p>
-      <h1>Gina TV</h1>
-      <p class="subtitle">Was passt gerade zu dir?</p>
+  <a class="skip-link" href="#mood-heading">Zur Stimmungsauswahl</a>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Gina TV – Startseite">
+        <svg class="brand-icon" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="m11 3 7 7 7-7"/><rect x="3" y="11" width="30" height="22" rx="6"/></svg>
+        <span>Gina TV</span>
+      </a>
+      <p class="brand-tagline">Dein Abend. Dein Programm.</p>
     </header>
-
-    <section class="mood-section" aria-labelledby="mood-heading">
-      <h2 id="mood-heading">Wähle deine Stimmung</h2>
-      <div class="mood-buttons">
-        <button class="mood-button" type="button" data-mood="entspannt">Entspannt</button>
-        <button class="mood-button" type="button" data-mood="bastellaune">Bastellaune</button>
-        <button class="mood-button" type="button" data-mood="muede">Müde</button>
-        <button class="mood-button" type="button" data-mood="berieseln">Einfach berieseln</button>
-      </div>
-    </section>
-
-    <section class="recommendations" aria-labelledby="recommendations-heading">
-      <div class="recommendations-header">
-        <h2 id="recommendations-heading">Empfehlungen</h2>
-        <p id="recommendation-status">Wähle oben eine Stimmung und entdecke passende Empfehlungen.</p>
-      </div>
-
-    <div id="recommendation-list" class="recommendation-list" aria-live="polite">
-    <article class="recommendation-card recommendation-card--placeholder">
-    <span class="card-label card-label--muted">Bereit</span>
-    <h3>Deine Empfehlungen warten schon</h3>
-    <p>Wähle eine Stimmung aus und wir zeigen dir direkt passende YouTube Ideen für genau diesen Moment.</p>
-    </article>
-    </div>
-    </section>
-  </main>
-
-  <script src="script.js"></script>
+    <main>
+      <section class="intro" aria-labelledby="page-heading">
+        <h1 id="page-heading">Was schauen wir<br><span>heute?</span></h1>
+        <p class="subtitle">Du bringst die Stimmung. Ich die Ideen.</p>
+      </section>
+      <section class="mood-section" aria-labelledby="mood-heading">
+        <h2 id="mood-heading">Wähle deine Stimmung</h2>
+        <div class="mood-buttons" role="group" aria-labelledby="mood-heading">
+          <button class="mood-button" type="button" data-mood="entspannt" aria-pressed="false" aria-controls="recommendation-list">
+            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 28C6 28 2 21 3 12c4 0 7 2 9 5M16 28c10 0 14-7 13-16-4 0-7 2-9 5"/><path d="M16 3c-8 8-10 15 0 25 10-10 8-17 0-25Z"/></svg>
+            <span>Entspannt</span>
+          </button>
+          <button class="mood-button" type="button" data-mood="bastellaune" aria-pressed="false" aria-controls="recommendation-list">
+            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><circle cx="7" cy="25" r="4"/><circle cx="25" cy="25" r="4"/><path d="m10 22 18-18M22 22 4 4"/></svg>
+            <span>Bastellaune</span>
+          </button>
+          <button class="mood-button" type="button" data-mood="muede" aria-pressed="false" aria-controls="recommendation-list">
+            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M28 20A12 12 0 0 1 12 4 12.5 12.5 0 1 0 28 20Z"/></svg>
+            <span>Müde</span>
+          </button>
+          <button class="mood-button" type="button" data-mood="berieseln" aria-pressed="false" aria-controls="recommendation-list">
+            <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect x="2" y="5" width="28" height="22" rx="6"/><path d="m13 11 8 5-8 5Z"/></svg>
+            <span>Einfach berieseln</span>
+          </button>
+        </div>
+        <p id="gina-note" class="gina-note">Such dir eine Stimmung aus. Ich mach’s dir gemütlich.</p>
+      </section>
+      <section class="recommendations" aria-labelledby="recommendations-heading">
+        <div class="recommendations-header">
+          <h2 id="recommendations-heading">Ideen für deinen Moment</h2>
+          <p id="recommendation-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+        <div id="recommendation-list" class="recommendation-list"></div>
+        <noscript><p class="noscript-note">Aktiviere JavaScript, um eine Stimmung auszuwählen und deine YouTube-Ideen zu entdecken.</p></noscript>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="footer-signature">Mit Gefühl ausgesucht. Von Gina.</p>
+      <p>Die Links öffnen die YouTube-Suche in einem neuen Tab.</p>
+      <p class="art-note">Die Bilder illustrieren die Suchideen.</p>
+    </footer>
+  </div>
 </body>
 </html>
